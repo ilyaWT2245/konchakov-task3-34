@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
 public class Program {
-    public static final Line L1 = new Line(-2, -2, -4);
-    public static final HorizontalParabola HP1 = new HorizontalParabola(-1, 2, -1);
-    public static final VerticalParabola VP1 = new VerticalParabola(-5, 3, 0.5);
+    public static final VerticalParabola VP1 = new VerticalParabola(2, 3, 0.5);
+    public static final VerticalParabola VP2 = new VerticalParabola(1, 6, -1);
+    public static final VerticalParabola VP3 = new VerticalParabola(4, 0, -0.125);
+    public static final Circle C1 = new Circle(-3, 5, 5);
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -17,30 +18,33 @@ public class Program {
     }
 
     public static SimpleColor getColor(double x, double y){
-        if (L1.IsPointAboveLine(x, y)){
+        if (C1.IsInsideCircle(x, y)){
+            if (VP1.IsUpperOfParabola(x, y) && !VP2.IsUpperOfParabola(x, y)){
+                return SimpleColor.YELLOW;
+            }
             if (VP1.IsUpperOfParabola(x, y)){
                 return SimpleColor.ORANGE;
-            } else{
-                return SimpleColor.GREEN;
             }
-        } else{
-            if (VP1.IsUpperOfParabola(x, y) && HP1.IsLeftOfParabola(x, y)){
-                return SimpleColor.BLUE;
+            if (!VP2.IsUpperOfParabola(x, y)){
+                return SimpleColor.ORANGE;
             }
-            if (VP1.IsUpperOfParabola(x, y)){
-                return SimpleColor.WHITE;
-            }
-            if (HP1.IsLeftOfParabola(x, y)){
-                return SimpleColor.GREEN;
-            }
-
-            if (y > 2){
-                if (x > - 5){
-                    return SimpleColor.ORANGE;
-                }
-                return SimpleColor.WHITE;
-            }
-            return SimpleColor.GREY;
+            return SimpleColor.BLUE;
         }
+        if (VP1.IsUpperOfParabola(x, y)){
+            if (!VP2.IsUpperOfParabola(x, y)){
+                return SimpleColor.GRAY;
+            }
+            return SimpleColor.WHITE;
+        }
+        if (!VP3.IsUpperOfParabola(x, y)){
+            if (!VP2.IsUpperOfParabola(x, y)){
+                return SimpleColor.GRAY;
+            }
+            if (x < 0){
+                return SimpleColor.WHITE;
+            }
+            return SimpleColor.ORANGE;
+        }
+        return SimpleColor.YELLOW;
     }
 }

@@ -1,7 +1,7 @@
 public enum SimpleColor {
     WHITE,
-    GREY,
-    GREEN,
+    YELLOW,
+    GRAY,
     ORANGE,
     BLUE
 }
